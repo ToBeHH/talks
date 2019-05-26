@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>{{title}}</title>
+  {{{style}}}
+  <script src="remark.min.js"></script>  
+  <script src="mermaid.min.js"></script>
+  <link rel="stylesheet" href="mermaid.css">
+  <script>
+    function create() {
+      return remark.create({
+        {{{source}}},
+        ratio: '16:9',
+        highlightLines: true,
+        countIncrementalSlides: false,
+        highlightStyle: 'github'
+      });
+    }
+mermaid.initialize({
+  startOnLoad: false,
+  cloneCssStyles: false
+});
+function initMermaid(s) {
+  var diagrams = document.querySelectorAll('.mermaid');
+  var i;
+  for(i=0;i<diagrams.length;i++){
+    if(diagrams[i].offsetWidth>0){
+      mermaid.init(undefined, diagrams[i]);
+    }
+  }
+}
+function init2(slideshow) {
+slideshow.on('afterShowSlide', initMermaid);
+initMermaid(slideshow.getSlides()[slideshow.getCurrentSlideIndex()]);
+}
+  </script>
+  <script defer src="https://use.fontawesome.com/releases/v5.8.1/js/all.js" integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ" crossorigin="anonymous"></script>
+</head>
+<body onload="slideshow = create(); init2(slideshow)">
+</body>
+</html>
